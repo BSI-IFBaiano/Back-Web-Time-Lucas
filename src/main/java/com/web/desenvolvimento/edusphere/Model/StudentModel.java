@@ -1,21 +1,19 @@
 package com.web.desenvolvimento.edusphere.Model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "admin")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class AdminModel extends PersonModel{
+@Table(name = "student")
+public class StudentModel extends PersonModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAdmin;
+    private Long idStudent;
 
     @ManyToOne
     @JoinColumn(name = "idUserr", nullable = false)
     private UserModel userr;
+
+    @ManyToOne
+    @JoinColumn(name = "idCourse", nullable = false)
+    private CourseModel course;
 }

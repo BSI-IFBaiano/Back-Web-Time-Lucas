@@ -6,16 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "admin")
+@Table(name = "subject")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminModel extends PersonModel{
+public class SubjectModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAdmin;
+    private Long idSubject;
 
     @ManyToOne
-    @JoinColumn(name = "idUserr", nullable = false)
-    private UserModel userr;
+    @JoinColumn(name = "idDepartment", nullable = false)
+    private DepartmentModel department;
+
+    private String name;
+    private int totNumberOfClasses;
+
 }

@@ -6,16 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "admin")
+@Table(name = "enrolledStudent")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminModel extends PersonModel{
+public class EnrolledStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAdmin;
+    private Long idEnrolledStudent;
 
     @ManyToOne
     @JoinColumn(name = "idUserr", nullable = false)
-    private UserModel userr;
+    private UserModel userM;
 }
