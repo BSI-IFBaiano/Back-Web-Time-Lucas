@@ -18,7 +18,7 @@ public class SubjectModel {
 
     @ManyToOne
     @JoinColumn(name = "idDepartment", nullable = false)
-    private DepartmentModel department;
+    private Department department;
 
     private String name;
     private int totNumberOfClasses;

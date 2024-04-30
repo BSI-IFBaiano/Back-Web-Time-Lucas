@@ -4,16 +4,16 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "student")
-public class StudentModel extends PersonModel {
+public class Student extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idStudent;
 
     @ManyToOne
     @JoinColumn(name = "idUserr", nullable = false)
-    private UserModel userr;
+    private User userr;
 
     @ManyToOne
     @JoinColumn(name = "idCourse", nullable = false)
-    private CourseModel course;
+    private Course course;
 }

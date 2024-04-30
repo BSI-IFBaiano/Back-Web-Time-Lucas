@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectsTaughtModel {
+public class SubjectsTaught {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSubjectsTaught;
@@ -21,6 +21,6 @@ public class SubjectsTaughtModel {
 
     @ManyToOne
     @JoinColumn(name = "idTeacher", nullable = false)
-    private TeacherModel teacher;
+    private Teacher teacher;
 
 }

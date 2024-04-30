@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AllocationsModel {
+public class Allocations {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAllocations;
 
     @ManyToOne
     @JoinColumn(name = "idSubjectsTaught", nullable = false)
-    private SubjectsTaughtModel subjectsTaught;
+    private SubjectsTaught subjectsTaught;
 
     private String semester;
 }

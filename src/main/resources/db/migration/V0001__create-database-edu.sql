@@ -1,6 +1,6 @@
 create table if not exists userr(
 	idUserr serial,
-	userrr varchar(25) not null,
+	userr varchar(25) not null,
 	password varchar(25) not null,
 	email varchar(250) unique not null,
 	phone varchar(16) not null,

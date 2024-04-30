@@ -5,24 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "course")
+@Table(name="teacher")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CourseModel {
-
+public class Teacher extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCourse;
+    private Long idTeacher;
+
+    @ManyToOne
+    @JoinColumn(name = "idUserr", nullable = false)
+    private User userr;
 
     @ManyToOne
     @JoinColumn(name = "idDepartment", nullable = false)
-    private DepartmentModel department;
-    private String name;
-    private int totWorkLoad;
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private Department department;
 
 }

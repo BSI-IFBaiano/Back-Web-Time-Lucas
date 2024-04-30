@@ -9,7 +9,7 @@ public class EdusphereApplication {
 
 	public static void main(String[] args) {
 		Dotenv dotenv = Dotenv.load();
-		System.setProperty(
+		System.setProperty(	
 				"spring.datasource.url",
 				dotenv.get("DB_URL")
 		);
@@ -23,5 +23,4 @@ public class EdusphereApplication {
 		);
 		SpringApplication.run(EdusphereApplication.class, args);
 	}
-
 }

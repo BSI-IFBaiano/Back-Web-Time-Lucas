@@ -17,5 +17,5 @@ public class EnrolledStudent {
 
     @ManyToOne
     @JoinColumn(name = "idUserr", nullable = false)
-    private UserModel userM;
+    private User userM;
 }

@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminModel extends PersonModel{
+public class Admin extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAdmin;
 
     @ManyToOne
     @JoinColumn(name = "idUserr", nullable = false)
-    private UserModel userr;
+    private User userr;
 }

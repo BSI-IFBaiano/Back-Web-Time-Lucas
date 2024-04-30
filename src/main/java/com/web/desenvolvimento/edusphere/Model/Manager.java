@@ -5,21 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "departament")
+@Table(name = "manager")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DepartmentModel {
+public class Manager extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idDepartament;
+    private Long idManager;
 
     @ManyToOne
-    @JoinColumn(name = "idManager", nullable = false)
-    private ManagerModel manager;
-    private String name;
-    private LocalDateTime createdAt;
+    @JoinColumn(name = "idUserr", nullable = false)
+    private User userr;
 }

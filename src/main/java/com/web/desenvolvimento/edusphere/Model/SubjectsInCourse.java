@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectsInCourseModel {
+public class SubjectsInCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSubjectsInCourse;
 
     @ManyToOne
     @JoinColumn(name = "idCourse", nullable = false)
-    private CourseModel course;
+    private Course course;
 
     @ManyToOne
     @JoinColumn(name = "idSubject", nullable = false)
