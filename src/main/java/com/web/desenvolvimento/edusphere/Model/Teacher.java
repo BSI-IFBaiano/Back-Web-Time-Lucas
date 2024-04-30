@@ -10,9 +10,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeacherModel extends PersonModel {
+public class Teacher extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTeacher;
+
+    @ManyToOne
+    @JoinColumn(name = "idUserr", nullable = false)
+    private User userr;
+
+    @ManyToOne
+    @JoinColumn(name = "idDepartment", nullable = false)
+    private Department department;
 
 }
