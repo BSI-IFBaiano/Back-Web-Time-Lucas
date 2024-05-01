@@ -2,11 +2,10 @@ package com.web.desenvolvimento.edusphere.Service;
 
 import com.web.desenvolvimento.edusphere.DTO.UserDTO;
 import com.web.desenvolvimento.edusphere.Mapper.IUserMapper;
-import com.web.desenvolvimento.edusphere.Model.User;
+import com.web.desenvolvimento.edusphere.Model.User.User;
 import com.web.desenvolvimento.edusphere.Repository.IUserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

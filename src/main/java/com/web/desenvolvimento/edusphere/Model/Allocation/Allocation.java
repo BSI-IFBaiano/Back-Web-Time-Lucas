@@ -1,5 +1,6 @@
-package com.web.desenvolvimento.edusphere.Model;
+package com.web.desenvolvimento.edusphere.Model.Allocation;
 
+import com.web.desenvolvimento.edusphere.Model.SubjectTaught.SubjectTaught;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,14 +11,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Allocations {
+public class Allocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAllocations;
+    private Long idAllocation;
 
     @ManyToOne
-    @JoinColumn(name = "idSubjectsTaught", nullable = false)
-    private SubjectsTaught subjectsTaught;
+    @JoinColumn(name = "idSubjectTaught", nullable = false)
+    private SubjectTaught subjectTaught;
 
     private String semester;
 }

@@ -1,4 +1,4 @@
-package com.web.desenvolvimento.edusphere.Model;
+package com.web.desenvolvimento.edusphere.Model.Person;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

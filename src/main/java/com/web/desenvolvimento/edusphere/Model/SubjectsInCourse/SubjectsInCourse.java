@@ -1,5 +1,7 @@
-package com.web.desenvolvimento.edusphere.Model;
+package com.web.desenvolvimento.edusphere.Model.SubjectsInCourse;
 
+import com.web.desenvolvimento.edusphere.Model.Course.Course;
+import com.web.desenvolvimento.edusphere.Model.Subject.Subject;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class SubjectsInCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idSubjectsInCourse;
+    private Long idSubjectInCourse;
 
     @ManyToOne
     @JoinColumn(name = "idCourse", nullable = false)
@@ -21,5 +23,5 @@ public class SubjectsInCourse {
 
     @ManyToOne
     @JoinColumn(name = "idSubject", nullable = false)
-    private SubjectModel subject;
+    private Subject subject;
 }

@@ -1,1 +1,0 @@
-alter table userr rename column idUserr to idUser;

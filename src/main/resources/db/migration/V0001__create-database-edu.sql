@@ -1,56 +1,56 @@
-create table if not exists userr(
-	idUserr serial,
-	userr varchar(25) not null,
+create table if not exists users(
+	idUser serial,
+	login varchar(25) not null,
 	password varchar(25) not null,
 	email varchar(250) unique not null,
 	phone varchar(16) not null,
     createdAt timestamp not null,
 
-    primary key (idUserr)
+    primary key (idUser)
 );
-create table if not exists admin(
+create table if not exists admins(
     idAdmin serial,
-    idUserr serial not null,
+    idUser serial not null,
     name varchar(250) not null,
     lastName varchar(250) not null,
 
     primary key(idAdmin),
-    foreign key(idUserr) references userr(idUserr)
+    foreign key(idUser) references users(idUser)
 );
 
-create table if not exists manager(
+create table if not exists managers(
     idManager serial,
-    idUserr serial not null,
+    idUser serial not null,
     name varchar(250) not null,
     lastName varchar(250) not null,
 
     primary key(idManager),
-    foreign key(idUserr) references userr(idUserr)
+    foreign key(idUser) references users(idUser)
 );
 
-create table if not exists department(
+create table if not exists departments(
     idDepartment serial,
     idManager serial not null,
     name varchar(250) not null,
     createdAt timestamp not null,
 
     primary key(idDepartment),
-    foreign key(idManager) references manager(idManager)
+    foreign key(idManager) references managers(idManager)
 );
 
-create table if not exists teacher(
+create table if not exists teachers(
     idTeacher serial,
-    idUserr serial not null,
+    idUser serial not null,
     idDepartment serial not null,
     name varchar(250) not null,
     lastName varchar(250) not null,
 
     primary key(idTeacher),
-    foreign key(idUserr) references userr(idUserr),
-    foreign key(idDepartment) references department(idDepartment)
+    foreign key(idUser) references users(idUser),
+    foreign key(idDepartment) references departments(idDepartment)
 );
 
-create table if not exists course (
+create table if not exists courses (
     idCourse serial,
     idDepartment serial not null,
     name varchar(250) not null,
@@ -58,38 +58,38 @@ create table if not exists course (
     createdAt timestamp not null,
 
     primary key(idCourse),
-    foreign key(idDepartment) references department(idDepartment)
+    foreign key(idDepartment) references departments(idDepartment)
 );
 
-create table if not exists student (
+create table if not exists students (
     idStudent serial,
-    idUserr serial,
+    idUser serial,
     idCourse serial,
     name varchar(250) not null,
     lastName varchar(250) not null,
 
     primary key(idStudent),
-    foreign key(idUserr) references userr(idUserr)
+    foreign key(idUser) references users(idUser)
 );
 
-create table if not exists subject (
+create table if not exists subjects (
     idSubject serial,
     idDepartment serial not null,
     name varchar(250) not null,
     totNumberOfClasses int not null,
 
     primary key(idSubject),
-    foreign key(idDepartment) references department(idDepartment)
+    foreign key(idDepartment) references departments(idDepartment)
 );
 
 create table if not exists subjectsInCourse(
-    idSubjectsInCourse serial,
+    idSubjectInCourse serial,
     idCourse serial not null,
     idSubject serial not null,
 
-    primary key(idSubjectsInCourse),
-    foreign key(idCourse) references course(idCourse),
-    foreign key(idSubject) references subject(idSubject)
+    primary key(idSubjectInCourse),
+    foreign key(idCourse) references courses(idCourse),
+    foreign key(idSubject) references subjects(idSubject)
 );
 
 create table if not exists subjectsTaught(
@@ -98,24 +98,24 @@ create table if not exists subjectsTaught(
     idTeacher serial not null,
 
     primary key(idSubjectTaught),
-    foreign key(idSubject) references subject(idSubject),
-    foreign key(idTeacher) references teacher(idTeacher)
+    foreign key(idSubject) references subjects(idSubject),
+    foreign key(idTeacher) references teachers(idTeacher)
 );
 
 create table if not exists allocations(
-    idAllocations serial,
+    idAllocation serial,
     idSubjectTaught serial not null,
     semester varchar(25),
 
-    primary key(idAllocations),
+    primary key(idAllocation),
     foreign key(idSubjectTaught) references subjectsTaught(idSubjectTaught)
 );
 
-create table if not exists enrolledStudent(
-    idEnrolledStudent serial,
+create table if not exists studentRegistrations(
+    idStudentRegistration serial,
     idStudent serial not null,
 
-    primary key(idEnrolledStudent),
-    foreign key(idStudent) references student(idStudent)
+    primary key(idStudentRegistration),
+    foreign key(idStudent) references students(idStudent)
 );
 

@@ -1,7 +1,7 @@
 package com.web.desenvolvimento.edusphere.Mapper;
 
 import com.web.desenvolvimento.edusphere.DTO.UserDTO;
-import com.web.desenvolvimento.edusphere.Model.User;
+import com.web.desenvolvimento.edusphere.Model.User.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

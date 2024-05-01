@@ -1,12 +1,14 @@
-package com.web.desenvolvimento.edusphere.Model;
+package com.web.desenvolvimento.edusphere.Model.Manager;
 
+import com.web.desenvolvimento.edusphere.Model.Person.Person;
+import com.web.desenvolvimento.edusphere.Model.User.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "manager")
+@Table(name = "managers")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +18,6 @@ public class Manager extends Person {
     private Long idManager;
 
     @ManyToOne
-    @JoinColumn(name = "idUserr", nullable = false)
-    private User userr;
+    @JoinColumn(name = "idUser", nullable = false)
+    private User user;
 }

@@ -1,5 +1,6 @@
-package com.web.desenvolvimento.edusphere.Model;
+package com.web.desenvolvimento.edusphere.Model.Department;
 
+import com.web.desenvolvimento.edusphere.Model.Manager.Manager;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,21 +9,18 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "course")
+@Table(name = "departments")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Course {
-
+public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCourse;
+    private Long idDepartment;
 
     @ManyToOne
-    @JoinColumn(name = "idDepartment", nullable = false)
-    private Department department;
+    @JoinColumn(name = "idManager", nullable = false)
+    private Manager manager;
     private String name;
-    private int totWorkLoad;
     private LocalDateTime createdAt = LocalDateTime.now();
-
 }

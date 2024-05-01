@@ -1,4 +1,4 @@
-package com.web.desenvolvimento.edusphere.Model;
+package com.web.desenvolvimento.edusphere.Model.User;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="userr")
+@Table(name="users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,8 +18,8 @@ public class User {
     @Column(name = "iduser", nullable = false)
     private Long idUser;
 
-    @Column(name = "userr")
-    private String userr;
+    @Column(name = "login")
+    private String login;
 
     @Column(name = "password")
     private String password;
