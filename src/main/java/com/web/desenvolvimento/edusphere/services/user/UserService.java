@@ -1,4 +1,4 @@
-package com.web.desenvolvimento.edusphere.services;
+package com.web.desenvolvimento.edusphere.services.user;
 
 import com.web.desenvolvimento.edusphere.domain.user.exceptions.UserNotFoundException;
 import com.web.desenvolvimento.edusphere.domain.user.exceptions.UserInvalidUpdateException;
@@ -44,7 +44,7 @@ public class UserService {
         User requestUser = userMapper.toModel(userRequestDTO);
         requestUser.setIdUser(idUser);
 
-        if(savedUser.getLogin().equals(requestUser.getLogin()) &&
+        if(savedUser.getUsername().equals(requestUser.getUsername()) &&
             savedUser.getEmail().equals(requestUser.getEmail()) &&
             savedUser.getCreatedAt().equals(requestUser.getCreatedAt())) {
 

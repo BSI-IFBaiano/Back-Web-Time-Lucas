@@ -1,4 +1,4 @@
-package com.web.desenvolvimento.edusphere.config;
+package com.web.desenvolvimento.edusphere.exception;
 
 import com.web.desenvolvimento.edusphere.domain.user.exceptions.UserInvalidUpdateException;
 import com.web.desenvolvimento.edusphere.domain.user.exceptions.UserNotFoundException;

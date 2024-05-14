@@ -1,9 +1,8 @@
 package com.web.desenvolvimento.edusphere.controllers;
 
-import com.web.desenvolvimento.edusphere.domain.user.User;
 import com.web.desenvolvimento.edusphere.dto.user.UserRequestDTO;
 import com.web.desenvolvimento.edusphere.dto.user.UserResponseDTO;
-import com.web.desenvolvimento.edusphere.services.UserService;
+import com.web.desenvolvimento.edusphere.services.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
