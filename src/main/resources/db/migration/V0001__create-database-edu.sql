@@ -1,121 +1,121 @@
-create table if not exists users(
-	idUser serial,
-	login varchar(25) not null,
-	password varchar(25) not null,
+create table if not exists tb_users(
+	id_user serial,
+	username varchar(25) not null,
+	password varchar(250) not null,
 	email varchar(250) unique not null,
-	phone varchar(16) not null,
-    createdAt timestamp not null,
+	phone varchar(25) not null,
+    created_at timestamp not null,
+    role varchar(50) not null,
 
-    primary key (idUser)
+    primary key (id_user)
 );
-create table if not exists admins(
-    idAdmin serial,
-    idUser serial not null,
+create table if not exists tb_admins(
+    id_admin serial,
+    id_user serial not null,
+    name varchar(250) not null,
+    last_name varchar(250) not null,
+
+    primary key(id_admin),
+    foreign key(id_user) references tb_users(id_user)
+);
+
+create table if not exists tb_managers(
+    id_manager serial,
+    id_user serial not null,
     name varchar(250) not null,
     lastName varchar(250) not null,
 
-    primary key(idAdmin),
-    foreign key(idUser) references users(idUser)
+    primary key(id_manager),
+    foreign key(id_user) references tb_users(id_user)
 );
 
-create table if not exists managers(
-    idManager serial,
-    idUser serial not null,
+create table if not exists tb_departments(
+    id_department serial,
+    id_manager serial not null,
     name varchar(250) not null,
-    lastName varchar(250) not null,
+    created_at timestamp not null,
 
-    primary key(idManager),
-    foreign key(idUser) references users(idUser)
+    primary key(id_department),
+    foreign key(id_manager) references tb_managers(id_manager)
 );
 
-create table if not exists departments(
-    idDepartment serial,
-    idManager serial not null,
+create table if not exists tb_teachers(
+    id_teacher serial,
+    id_user serial not null,
+    id_department serial not null,
     name varchar(250) not null,
-    createdAt timestamp not null,
+    last_name varchar(250) not null,
 
-    primary key(idDepartment),
-    foreign key(idManager) references managers(idManager)
+    primary key(id_teacher),
+    foreign key(id_user) references tb_users(id_user),
+    foreign key(id_department) references tb_departments(id_department)
 );
 
-create table if not exists teachers(
-    idTeacher serial,
-    idUser serial not null,
-    idDepartment serial not null,
+create table if not exists tb_courses (
+    id_course serial,
+    id_department serial not null,
     name varchar(250) not null,
-    lastName varchar(250) not null,
+    tot_work_Load int not null,
+    created_at timestamp not null,
 
-    primary key(idTeacher),
-    foreign key(idUser) references users(idUser),
-    foreign key(idDepartment) references departments(idDepartment)
+    primary key(id_course),
+    foreign key(id_department) references tb_departments(id_department)
 );
 
-create table if not exists courses (
-    idCourse serial,
-    idDepartment serial not null,
+create table if not exists tb_students (
+    id_student serial,
+    id_user serial,
+    id_course serial,
     name varchar(250) not null,
-    totWorkLoad int not null,
-    createdAt timestamp not null,
+    last_name varchar(250) not null,
 
-    primary key(idCourse),
-    foreign key(idDepartment) references departments(idDepartment)
+    primary key(id_student),
+    foreign key(id_user) references tb_users(id_user)
 );
 
-create table if not exists students (
-    idStudent serial,
-    idUser serial,
-    idCourse serial,
+create table if not exists tb_subjects (
+    id_subject serial,
+    id_department serial not null,
     name varchar(250) not null,
-    lastName varchar(250) not null,
+    tot_number_of_classes int not null,
 
-    primary key(idStudent),
-    foreign key(idUser) references users(idUser)
+    primary key(id_subject),
+    foreign key (id_department) references tb_departments(id_department)
 );
 
-create table if not exists subjects (
-    idSubject serial,
-    idDepartment serial not null,
-    name varchar(250) not null,
-    totNumberOfClasses int not null,
+create table if not exists tb_subjects_in_course(
+    id_subject_in_course serial,
+    id_course serial not null,
+    id_subject serial not null,
 
-    primary key(idSubject),
-    foreign key(idDepartment) references departments(idDepartment)
+    primary key(id_subject_in_course),
+    foreign key(id_course) references tb_courses(id_course),
+    foreign key(id_subject) references tb_subjects(id_subject)
 );
 
-create table if not exists subjectsInCourse(
-    idSubjectInCourse serial,
-    idCourse serial not null,
-    idSubject serial not null,
+create table if not exists tb_subjects_taught(
+    id_subject_taught serial,
+    id_subject serial not null,
+    id_teacher serial not null,
 
-    primary key(idSubjectInCourse),
-    foreign key(idCourse) references courses(idCourse),
-    foreign key(idSubject) references subjects(idSubject)
+    primary key(id_subject_taught),
+    foreign key(id_subject) references tb_subjects(id_subject),
+    foreign key(id_teacher) references tb_teachers(id_teacher)
 );
 
-create table if not exists subjectsTaught(
-    idSubjectTaught serial,
-    idSubject serial not null,
-    idTeacher serial not null,
-
-    primary key(idSubjectTaught),
-    foreign key(idSubject) references subjects(idSubject),
-    foreign key(idTeacher) references teachers(idTeacher)
-);
-
-create table if not exists allocations(
-    idAllocation serial,
-    idSubjectTaught serial not null,
+create table if not exists tb_allocations(
+    id_allocation serial,
+    id_subject_taught serial not null,
     semester varchar(25),
 
-    primary key(idAllocation),
-    foreign key(idSubjectTaught) references subjectsTaught(idSubjectTaught)
+    primary key(id_allocation),
+    foreign key(id_subject_taught) references tb_subjects_taught(id_subject_taught)
 );
 
-create table if not exists studentRegistrations(
-    idStudentRegistration serial,
-    idStudent serial not null,
+create table if not exists tb_student_registrations(
+    id_student_registration serial,
+    id_student serial not null,
 
-    primary key(idStudentRegistration),
-    foreign key(idStudent) references students(idStudent)
+    primary key(id_student_registration),
+    foreign key(id_student) references tb_students(id_student)
 );
-

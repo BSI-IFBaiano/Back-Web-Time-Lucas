@@ -9,12 +9,13 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 @Mapper
-
 public interface IUserMapper {
 
     IUserMapper INSTANCE = Mappers.getMapper(IUserMapper.class);
 
     User toModel(UserRequestDTO userRequestDTO);
+
     UserResponseDTO toDTO(User user);
     List<UserResponseDTO> toDTO(List<User> users);
+
 }
