@@ -26,16 +26,25 @@ public class User implements UserDetails {
     @Column(name = "id_user")
     private Long idUser;
 
-    @Column(name = "username")
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "phone")
+    @Column(name = "recovery_email", nullable = false)
+    private String recoveryEmail;
+
+    @Column(name = "phone", nullable = false)
     private String phone;
 
     @CreationTimestamp
