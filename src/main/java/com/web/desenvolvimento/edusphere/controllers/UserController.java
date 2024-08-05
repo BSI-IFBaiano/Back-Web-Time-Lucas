@@ -6,17 +6,19 @@ import com.web.desenvolvimento.edusphere.services.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/edusphere/users")
 public class UserController {
     @Autowired
     private UserService userService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponseDTO>> findAll() {
         return userService.findAll();
     }
@@ -27,7 +29,9 @@ public class UserController {
         return userService.findById(idUser);
     }
 
-    @PostMapping
+
+    @PostMapping("/register")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserRequestDTO userRequestDTO) {
         return userService.create(userRequestDTO);
     }

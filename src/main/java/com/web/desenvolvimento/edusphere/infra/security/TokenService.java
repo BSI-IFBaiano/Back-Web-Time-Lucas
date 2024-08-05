@@ -1,8 +1,10 @@
 package com.web.desenvolvimento.edusphere.infra.security;
 
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.web.desenvolvimento.edusphere.domain.user.User;
 import org.springframework.stereotype.Service;
 import com.auth0.jwt.JWT;
@@ -20,8 +22,9 @@ public class TokenService {
             var expiresIn = 300L;
             return JWT.create()
                     .withIssuer("backend")
-                    .withSubject(user.getUsername().toString())
+                    .withSubject(user.getUsername())
                     .withClaim("id", user.getIdUser().toString())
+                    .withClaim("role", user.getRole().name())
                     .withExpiresAt(now.plusSeconds(expiresIn))
                     .sign(Algorithm.HMAC256(secret));
 
@@ -30,14 +33,13 @@ public class TokenService {
         }
     }
 
-    public String validadeToken(String token) {
+    public DecodedJWT validadeToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.require(algorithm)
+            JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer("backend")
-                    .build()
-                    .verify(token)
-                    .getSubject();
+                    .build();
+            return verifier.verify(token);
         }catch (JWTVerificationException exception) {
             return null;
         }

@@ -9,17 +9,10 @@ import com.web.desenvolvimento.edusphere.dto.user.UserRequestDTO;
 import com.web.desenvolvimento.edusphere.mappers.IUserMapper;
 import com.web.desenvolvimento.edusphere.repositories.IUserRepository;
 import com.web.desenvolvimento.edusphere.infra.security.TokenService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Optional;
 
 @RestController
@@ -45,14 +38,14 @@ public class AuthenticationController {
 
         if(passwordEncoder.matches(loginRequest.password(), user.getPassword())) {
             String token = tokenService.generateToken(user);
-            return ResponseEntity.ok(new LoginResponse(token, user.getUsername()));
+            return ResponseEntity.ok(new LoginResponse(token, user.getUsername(), user.getRole().toString()));
         } else {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<LoginResponse> register(@RequestBody UserRequestDTO registerRequest) {
+    public ResponseEntity<String> register(@RequestBody UserRequestDTO registerRequest) {
         Role role = Role.valueOf(registerRequest.role().toUpperCase());
         System.out.println(role);
         Optional<User> user = userRepository.findByUsername(registerRequest.username());
@@ -63,9 +56,9 @@ public class AuthenticationController {
             newUser.setPassword(passwordEncoder.encode(registerRequest.password()));
             this.userRepository.save(newUser);
             String token = this.tokenService.generateToken(newUser);
-            return ResponseEntity.ok(new LoginResponse(token, newUser.getUsername()));
+            return ResponseEntity.status(HttpStatus.CREATED).body("Success! user created!");
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error! Impossible to create user!");
         }
     }
 }

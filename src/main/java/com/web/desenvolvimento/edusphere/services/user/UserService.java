@@ -7,28 +7,35 @@ import com.web.desenvolvimento.edusphere.dto.user.UserResponseDTO;
 import com.web.desenvolvimento.edusphere.mappers.IUserMapper;
 import com.web.desenvolvimento.edusphere.domain.user.User;
 import com.web.desenvolvimento.edusphere.repositories.IUserRepository;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserService {
-    @Autowired
+
     private IUserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private final IUserMapper userMapper = IUserMapper.INSTANCE;
+
+    public UserService(IUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Transactional
     public ResponseEntity<UserResponseDTO> create(UserRequestDTO userRequestDTO) {
         User userToSave = userMapper.toModel(userRequestDTO);
+        userToSave.setPassword(passwordEncoder.encode(userToSave.getPassword()));
         userRepository.save(userToSave);
         UserResponseDTO userResponseDTO = userMapper.toDTO(userToSave);
         return ResponseEntity.status(HttpStatus.CREATED)
