@@ -13,14 +13,6 @@ create table if not exists tb_users(
     primary key (id_user)
 );
 
-create table if not exists tb_admins(
-    id_admin serial,
-    id_user int not null,
-
-    primary key(id_admin),
-    foreign key(id_user) references tb_users(id_user)
-);
-
 create table if not exists tb_managers(
     id_manager serial,
     id_user int not null,
@@ -83,8 +75,8 @@ create table if not exists tb_subjects (
 
 create table if not exists tb_subjects_in_course(
     id_subject_in_course serial,
-    id_course serial not null,
-    id_subject serial not null,
+    id_course int not null,
+    id_subject int not null,
 
     primary key(id_subject_in_course),
     foreign key(id_course) references tb_courses(id_course),
@@ -104,7 +96,8 @@ create table if not exists tb_subjects_taught(
 create table if not exists tb_allocations(
     id_allocation serial,
     id_subject_taught int not null,
-    semester varchar(25),
+    semester varchar(25) not null,
+    year_allocation int not null,
 
     primary key(id_allocation),
     foreign key(id_subject_taught) references tb_subjects_taught(id_subject_taught)
@@ -113,7 +106,9 @@ create table if not exists tb_allocations(
 create table if not exists tb_student_registrations(
     id_student_registration serial,
     id_student int not null,
+    id_allocation int not null,
 
     primary key(id_student_registration),
-    foreign key(id_student) references tb_students(id_student)
+    foreign key(id_student) references tb_students(id_student),
+    foreign key(id_allocation) references tb_allocations(id_allocation)
 );

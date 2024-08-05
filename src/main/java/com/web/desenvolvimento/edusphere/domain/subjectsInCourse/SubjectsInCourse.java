@@ -15,13 +15,14 @@ import lombok.NoArgsConstructor;
 public class SubjectsInCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_subject_in_course")
     private Long idSubjectInCourse;
 
     @ManyToOne
-    @JoinColumn(name = "idCourse", nullable = false)
+    @JoinColumn(name = "id_course", nullable = false)
     private Course course;
 
     @ManyToOne
-    @JoinColumn(name = "idSubject", nullable = false)
+    @JoinColumn(name = "id_subject", nullable = false)
     private Subject subject;
 }

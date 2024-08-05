@@ -15,13 +15,16 @@ public class Subject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_subject")
     private Long idSubject;
 
     @ManyToOne
-    @JoinColumn(name = "idDepartment", nullable = false)
+    @JoinColumn(name = "id_department", nullable = false)
     private Department department;
 
     private String name;
+
+    @Column(name = "tot_number_of_classes")
     private int totNumberOfClasses;
 
 }

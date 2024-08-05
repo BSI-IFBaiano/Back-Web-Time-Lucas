@@ -36,9 +36,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/edusphere/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/edusphere/users").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/edusphere/admin/create").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/edusphere/users/register").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/edusphere/manager").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 ).sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
