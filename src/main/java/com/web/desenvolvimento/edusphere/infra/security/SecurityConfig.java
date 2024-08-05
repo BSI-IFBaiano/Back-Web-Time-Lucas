@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
 
     @Autowired
-    private AuthenticationUserDetailsService userDetailsService;
+    private UserDetailsImpl userDetailsService;
 
     @Autowired
     private SecurityFilter securityFilter; // Injeção correta do filtro
@@ -33,7 +33,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/edusphere/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/edusphere/users").hasRole("ADMIN")
@@ -41,7 +40,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/edusphere/users/register").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/edusphere/manager").hasRole("ADMIN")
                         .anyRequest().permitAll()
-                )
+                ).sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
