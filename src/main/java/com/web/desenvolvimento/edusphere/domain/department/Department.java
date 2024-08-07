@@ -31,4 +31,8 @@ public class Department {
     @CreationTimestamp
     @Column(name = "created_at")
     private Instant createdAt;
+    
+    public String getName() {
+    	return this.name;
+    }
 }

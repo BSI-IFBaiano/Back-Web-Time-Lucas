@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.desenvolvimento.edusphere.domain.manager.Manager;
@@ -16,6 +17,7 @@ import com.web.desenvolvimento.edusphere.dto.manager.ManagerResponseDTO;
 import com.web.desenvolvimento.edusphere.mappers.IManagerMapper;
 import com.web.desenvolvimento.edusphere.repositories.IManagerRepository;
 
+@Service
 public class ManagerService {
 
 	private IManagerRepository managerRepository;
