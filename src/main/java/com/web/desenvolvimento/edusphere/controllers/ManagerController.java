@@ -27,7 +27,7 @@ public class ManagerController {
     private ManagerService managerService;
 
     @GetMapping
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ManagerResponseDTO>> findAll() {
         return managerService.findAll();
     }
