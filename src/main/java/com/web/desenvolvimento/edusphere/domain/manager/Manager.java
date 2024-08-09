@@ -20,4 +20,8 @@ public class Manager {
     @ManyToOne
     @JoinColumn(name = "idUser", nullable = false)
     private User user;
+    
+    public User getUser() {
+    	return this.user;
+    }
 }
