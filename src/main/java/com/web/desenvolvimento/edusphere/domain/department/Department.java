@@ -24,15 +24,14 @@ public class Department {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne
-    @JoinColumn(name = "idManager", nullable = false)
+    @JoinColumn(name = "id_manager", nullable = false)
     private Manager manager;
 
     @CreationTimestamp
     @Column(name = "created_at")
     private Instant createdAt;
-    
-    public String getName() {
-    	return this.name;
-    }
 }

@@ -86,4 +86,9 @@ public class UserService {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .body(userResponseDTO);
     }
+
+    @Transactional
+    public ResponseEntity<Boolean> userExists(Long id) {
+        return ResponseEntity.ok(userRepository.existsById(id));
+    }
 }

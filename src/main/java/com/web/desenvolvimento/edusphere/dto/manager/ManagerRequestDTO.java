@@ -1,9 +1,8 @@
 package com.web.desenvolvimento.edusphere.dto.manager;
 
-import com.web.desenvolvimento.edusphere.domain.user.User;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-public record ManagerRequestDTO(Long idManager, @NotBlank User user) {
+public record ManagerRequestDTO(Long idManager, @NotNull Long idUser) {
 
 }
