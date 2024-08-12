@@ -3,6 +3,7 @@ package com.web.desenvolvimento.edusphere.services.manager;
 import java.util.List;
 
 import com.web.desenvolvimento.edusphere.domain.user.User;
+import com.web.desenvolvimento.edusphere.dto.user.UserResponseDTO;
 import com.web.desenvolvimento.edusphere.mappers.IUserMapper;
 import com.web.desenvolvimento.edusphere.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,21 @@ public class ManagerService {
 
 	@Transactional
 	public ResponseEntity<ManagerResponseDTO> create(ManagerRequestDTO managerRequestDTO) {
-		User userManager = userMapper.toModel(userService.findById(managerRequestDTO.idUser()).getBody());
-		if (!"MANAGER".equals(userManager.getRole().name()) ) {
+		User userInternal = userService.findByIdInternal(managerRequestDTO.idUser());
+
+
+		if (userInternal == null || userInternal.getRole() == null) {
+			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O usuário ou a role do usuário não pode ser nula.");
+		}
+
+        if (!"MANAGER".equals(userInternal.getRole().name()) ) {
 			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O usuário não é um gestor");
 		}
 		Manager managerToSave = managerMapper.toModel(managerRequestDTO);
+		managerToSave.setUser(userInternal);
 		managerRepository.save(managerToSave);
+
+
 		ManagerResponseDTO managerResponseDTO = managerMapper.toDTO(managerToSave);
 		return ResponseEntity.status(HttpStatus.CREATED).body(managerResponseDTO);
 	}

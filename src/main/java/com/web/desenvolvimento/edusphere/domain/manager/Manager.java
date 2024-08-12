@@ -18,7 +18,7 @@ public class Manager {
     private Long idManager;
 
     @ManyToOne
-    @JoinColumn(name = "idUser", nullable = false)
+    @JoinColumn(name = "id_user", nullable = false)
     private User user;
 
 }

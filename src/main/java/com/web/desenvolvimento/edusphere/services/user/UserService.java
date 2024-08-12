@@ -88,6 +88,11 @@ public class UserService {
     }
 
     @Transactional
+    public User findByIdInternal(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    }
+
+    @Transactional
     public ResponseEntity<Boolean> userExists(Long id) {
         return ResponseEntity.ok(userRepository.existsById(id));
     }

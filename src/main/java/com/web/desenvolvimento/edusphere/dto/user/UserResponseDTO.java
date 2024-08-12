@@ -7,5 +7,5 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 
 public record UserResponseDTO(Long idUser, @NotBlank String username, @NotBlank String email,
-                              @NotBlank String phone, @NotNull Instant createdAt) {
+                              @NotBlank String phone, @NotNull Instant createdAt, @NotBlank String role) {
 }
