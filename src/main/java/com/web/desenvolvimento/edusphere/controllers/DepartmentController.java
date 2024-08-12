@@ -22,18 +22,6 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<DepartmentResponseDTO>> findAll() {
-        return departmentService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    @ResponseBody
-    public ResponseEntity<DepartmentResponseDTO> findById(@PathVariable("id") Long idDepartment) {
-        return departmentService.findById(idDepartment);
-    }
-
 
     @PostMapping("/register")
     @PreAuthorize("hasRole('ADMIN')")
