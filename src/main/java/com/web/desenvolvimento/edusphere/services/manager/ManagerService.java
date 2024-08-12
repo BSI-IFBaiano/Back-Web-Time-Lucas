@@ -38,7 +38,6 @@ public class ManagerService {
 	public ResponseEntity<ManagerResponseDTO> create(ManagerRequestDTO managerRequestDTO) {
 		User userInternal = userService.findByIdInternal(managerRequestDTO.idUser());
 
-
 		if (userInternal == null || userInternal.getRole() == null) {
 			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O usuário ou a role do usuário não pode ser nula.");
 		}
@@ -49,7 +48,6 @@ public class ManagerService {
 		Manager managerToSave = managerMapper.toModel(managerRequestDTO);
 		managerToSave.setUser(userInternal);
 		managerRepository.save(managerToSave);
-
 
 		ManagerResponseDTO managerResponseDTO = managerMapper.toDTO(managerToSave);
 		return ResponseEntity.status(HttpStatus.CREATED).body(managerResponseDTO);
@@ -79,4 +77,8 @@ public class ManagerService {
 		return ResponseEntity.ok(managerRepository.existsById(id));
 	}
 
+	@Transactional
+    public Manager findByIdInternal(Long id) {
+		return managerRepository.findById(id).orElseThrow(() -> new RuntimeException("Gestor não encontrado"));
+	}
 }

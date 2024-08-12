@@ -21,5 +21,9 @@ public interface IManagerMapper {
     @Mapping(source = "user.email", target = "email")
     @Mapping(source = "user.role", target = "role")
     ManagerResponseDTO toDTO(Manager manager);
+
+    @Mapping(source = "user.name", target = "name")
+    @Mapping(source = "user.email", target = "email")
+    @Mapping(source = "user.role", target = "role")
     List<ManagerResponseDTO> toDTO(List<Manager> managers);
 }
