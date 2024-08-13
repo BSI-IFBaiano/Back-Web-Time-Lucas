@@ -1,6 +1,6 @@
 package com.web.desenvolvimento.edusphere.domain.user;
 
-import com.web.desenvolvimento.edusphere.dto.LoginRequest;
+import com.web.desenvolvimento.edusphere.dto.login.LoginRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -2,6 +2,7 @@ package com.web.desenvolvimento.edusphere.services.department;
 
 import com.web.desenvolvimento.edusphere.domain.department.Department;
 import com.web.desenvolvimento.edusphere.domain.manager.Manager;
+import com.web.desenvolvimento.edusphere.domain.manager.expections.ManagerNotFoundException;
 import com.web.desenvolvimento.edusphere.dto.department.DepartmentRequestDTO;
 import com.web.desenvolvimento.edusphere.dto.department.DepartmentResponseDTO;
 import com.web.desenvolvimento.edusphere.mappers.IDepartmentMapper;
@@ -32,15 +33,19 @@ public class DepartmentService {
     public ResponseEntity<DepartmentResponseDTO> create(DepartmentRequestDTO departmentRequestDTO) {
         Manager managerInternal = managerService.findByIdInternal(departmentRequestDTO.idManager());
 
-        if (managerInternal == null) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Gestor não existe");
+        if (managerInternal != null) {
+            Department departmentToSave = departmentMapper.toModel(departmentRequestDTO);
+            departmentToSave.setManager(managerInternal);
+            departmentRepository.save(departmentToSave);
+            DepartmentResponseDTO departmentResponseDTO = departmentMapper.toDTO(departmentToSave);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(departmentResponseDTO);
         }
-        Department departmentToSave = departmentMapper.toModel(departmentRequestDTO);
-        departmentToSave.setManager(managerInternal);
-        departmentRepository.save(departmentToSave);
-        DepartmentResponseDTO departmentResponseDTO = departmentMapper.toDTO(departmentToSave);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(departmentResponseDTO);
+        throw new ManagerNotFoundException("Gestor não existe!");
     }
 
+    @Transactional
+    public Department findByIdInternal(Long id) {
+        return departmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Departamento não encontrado"));
+    }
 }
