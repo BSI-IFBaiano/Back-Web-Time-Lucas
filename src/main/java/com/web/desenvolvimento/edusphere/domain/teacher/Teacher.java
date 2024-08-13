@@ -27,4 +27,6 @@ public class Teacher {
     @JoinColumn(name = "id_department", nullable = false)
     private Department department;
 
+    @Column(name = "graduation")
+    private String graduation;
 }
