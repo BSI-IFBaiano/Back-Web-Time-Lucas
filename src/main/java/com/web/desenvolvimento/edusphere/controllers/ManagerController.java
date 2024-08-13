@@ -23,8 +23,13 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/edusphere/managers")
 public class ManagerController {
-	@Autowired
-    private ManagerService managerService;
+
+    private final ManagerService managerService;
+
+    @Autowired
+    public ManagerController(ManagerService managerService) {
+        this.managerService = managerService;
+    }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -38,17 +43,10 @@ public class ManagerController {
         return managerService.findById(idManager);
     }
 
-
     @PostMapping("/register")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ManagerResponseDTO> create(@RequestBody @Valid ManagerRequestDTO managerRequestDTO) {
         return managerService.create(managerRequestDTO);
     }
 
-    @PutMapping("/{id}")
-    @ResponseBody
-    public ResponseEntity<ManagerResponseDTO> update(@PathVariable("id") Long idManager,
-                                       @RequestBody @Valid ManagerRequestDTO managerRequestDTO){
-        return managerService.update(idManager, managerRequestDTO);
-    }
 }

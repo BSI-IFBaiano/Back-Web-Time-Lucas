@@ -2,6 +2,10 @@ package com.web.desenvolvimento.edusphere.services.manager;
 
 import java.util.List;
 
+import com.web.desenvolvimento.edusphere.domain.user.User;
+import com.web.desenvolvimento.edusphere.dto.user.UserResponseDTO;
+import com.web.desenvolvimento.edusphere.mappers.IUserMapper;
+import com.web.desenvolvimento.edusphere.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.desenvolvimento.edusphere.domain.manager.Manager;
-import com.web.desenvolvimento.edusphere.domain.user.exceptions.UserInvalidUpdateException;
 import com.web.desenvolvimento.edusphere.domain.user.exceptions.UserNotFoundException;
 import com.web.desenvolvimento.edusphere.dto.manager.ManagerRequestDTO;
 import com.web.desenvolvimento.edusphere.dto.manager.ManagerResponseDTO;
@@ -20,47 +23,36 @@ import com.web.desenvolvimento.edusphere.repositories.IManagerRepository;
 @Service
 public class ManagerService {
 
-	private IManagerRepository managerRepository;
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
+	private final IManagerRepository managerRepository;
+	private final UserService userService;
+	private final IUserMapper userMapper = IUserMapper.INSTANCE;
 	private final IManagerMapper managerMapper = IManagerMapper.INSTANCE;
 
-	public ManagerService(IManagerRepository managerRepository) {
+	@Autowired
+	public ManagerService(IManagerRepository managerRepository, UserService userService) {
 		this.managerRepository = managerRepository;
+		this.userService = userService;
 	}
 
 	@Transactional
 	public ResponseEntity<ManagerResponseDTO> create(ManagerRequestDTO managerRequestDTO) {
+		User userInternal = userService.findByIdInternal(managerRequestDTO.idUser());
+
+		if (userInternal == null || userInternal.getRole() == null) {
+			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O usuário ou a role do usuário não pode ser nula.");
+		}
+
+        if (!"MANAGER".equals(userInternal.getRole().name()) ) {
+			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O usuário não é um gestor");
+		}
 		Manager managerToSave = managerMapper.toModel(managerRequestDTO);
-		managerToSave.setPassword(passwordEncoder.encode(managerToSave.getUser().getPassword()));
+		managerToSave.setUser(userInternal);
 		managerRepository.save(managerToSave);
+
 		ManagerResponseDTO managerResponseDTO = managerMapper.toDTO(managerToSave);
 		return ResponseEntity.status(HttpStatus.CREATED).body(managerResponseDTO);
 	}
 
-	@Transactional
-	public ResponseEntity<ManagerResponseDTO> update(Long idManager, ManagerRequestDTO managerRequestDTO) {
-
-		Manager savedManager = managerRepository.findById(idManager)
-				.orElseThrow(() -> new UserNotFoundException("Usuário não encontrado!"));
-		Manager requestManager = managerMapper.toModel(managerRequestDTO);
-		requestManager.setIdManager(idManager);
-
-		if (savedManager.getUser().getUsername().equals(requestManager.getUser().getUsername())
-				&& savedManager.getUser().getEmail().equals(requestManager.getUser().getEmail())
-				&& savedManager.getUser().getCreatedAt().equals(requestManager.getUser().getCreatedAt())) {
-
-			savedManager.getUser().setPassword(requestManager.getUser().getPassword());
-			savedManager.getUser().setPhone(requestManager.getUser().getPhone());
-			managerRepository.save(savedManager);
-
-			ManagerResponseDTO managerResponseDTO = managerMapper.toDTO(savedManager);
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(managerResponseDTO);
-		}
-		throw new UserInvalidUpdateException("Atualização invalida");
-	}
 
 	@Transactional
 	public ResponseEntity<List<ManagerResponseDTO>> findAll() {
@@ -80,4 +72,13 @@ public class ManagerService {
 		return ResponseEntity.status(HttpStatus.FOUND).body(managerResponseDTO);
 	}
 
+	@Transactional
+	public ResponseEntity<Boolean> managerExists(Long id) {
+		return ResponseEntity.ok(managerRepository.existsById(id));
+	}
+
+	@Transactional
+    public Manager findByIdInternal(Long id) {
+		return managerRepository.findById(id).orElseThrow(() -> new RuntimeException("Gestor não encontrado"));
+	}
 }
