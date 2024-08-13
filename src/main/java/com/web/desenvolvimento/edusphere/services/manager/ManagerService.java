@@ -3,13 +3,12 @@ package com.web.desenvolvimento.edusphere.services.manager;
 import java.util.List;
 
 import com.web.desenvolvimento.edusphere.domain.user.User;
-import com.web.desenvolvimento.edusphere.dto.user.UserResponseDTO;
+import com.web.desenvolvimento.edusphere.domain.user.exceptions.UserNotHaveThisRoleException;
 import com.web.desenvolvimento.edusphere.mappers.IUserMapper;
 import com.web.desenvolvimento.edusphere.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,19 +37,18 @@ public class ManagerService {
 	public ResponseEntity<ManagerResponseDTO> create(ManagerRequestDTO managerRequestDTO) {
 		User userInternal = userService.findByIdInternal(managerRequestDTO.idUser());
 
-		if (userInternal == null || userInternal.getRole() == null) {
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O usuário ou a role do usuário não pode ser nula.");
-		}
+		if (userInternal != null && userInternal.getRole() != null) {
+			if (!"MANAGER".equals(userInternal.getRole().name()) ) {
+				throw new UserNotHaveThisRoleException("O usuário não é um gestor!");
+			}
+			Manager managerToSave = managerMapper.toModel(managerRequestDTO);
+			managerToSave.setUser(userInternal);
+			managerRepository.save(managerToSave);
 
-        if (!"MANAGER".equals(userInternal.getRole().name()) ) {
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O usuário não é um gestor");
+			ManagerResponseDTO managerResponseDTO = managerMapper.toDTO(managerToSave);
+			return ResponseEntity.status(HttpStatus.CREATED).body(managerResponseDTO);
 		}
-		Manager managerToSave = managerMapper.toModel(managerRequestDTO);
-		managerToSave.setUser(userInternal);
-		managerRepository.save(managerToSave);
-
-		ManagerResponseDTO managerResponseDTO = managerMapper.toDTO(managerToSave);
-		return ResponseEntity.status(HttpStatus.CREATED).body(managerResponseDTO);
+		throw new UserNotFoundException("Usuário não foi encontrado ou não é um gestor!");
 	}
 
 
