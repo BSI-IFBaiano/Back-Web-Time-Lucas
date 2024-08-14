@@ -1,6 +1,7 @@
 package com.web.desenvolvimento.edusphere.services.course;
 
 import com.web.desenvolvimento.edusphere.domain.course.Course;
+import com.web.desenvolvimento.edusphere.domain.course.exceptions.CourseNotFoundException;
 import com.web.desenvolvimento.edusphere.domain.department.Department;
 import com.web.desenvolvimento.edusphere.domain.department.exceptions.DepartmentNotFoundException;
 import com.web.desenvolvimento.edusphere.dto.course.CourseRequestDTO;
@@ -40,5 +41,10 @@ public class CourseService {
 
         CourseResponseDTO courseResponseDTO = courseMapper.toDTO(courseToSave);
         return ResponseEntity.status(HttpStatus.CREATED).body(courseResponseDTO);
+    }
+
+    @Transactional
+    public Course findByIdInternal(Long id) {
+        return courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Curso não encontrado!"));
     }
 }
