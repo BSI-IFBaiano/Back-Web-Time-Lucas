@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "subjects")
+@Table(name = "tb_subjects")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,9 +22,10 @@ public class Subject {
     @JoinColumn(name = "id_department", nullable = false)
     private Department department;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "tot_number_of_classes")
+    @Column(name = "tot_number_of_classes", nullable = false)
     private int totNumberOfClasses;
 
 }
