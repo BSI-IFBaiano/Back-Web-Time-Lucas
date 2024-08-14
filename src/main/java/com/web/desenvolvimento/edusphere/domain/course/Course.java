@@ -23,8 +23,10 @@ public class Course {
     private Long idCourse;
 
     @ManyToOne
-    @JoinColumn(name = "idDepartment", nullable = false)
+    @JoinColumn(name = "id_department", nullable = false)
     private Department department;
+
+    @Column(name = "name")
     private String name;
 
     @Column(name = "tot_work_load")
