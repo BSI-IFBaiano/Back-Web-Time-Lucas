@@ -37,7 +37,8 @@ public class TeacherService {
     public ResponseEntity<TeacherResponseDTO> create(TeacherRequestDTO teacherRequestDTO) {
         User userInternal = userService.findByIdInternal(teacherRequestDTO.idUser());
         Department departmentInternal = departmentService.findByIdInternal(
-                teacherRequestDTO.idDepartment());
+                teacherRequestDTO.idDepartment()
+        );
 
         if (userInternal != null && departmentInternal != null) {
             if (!"TEACHER".equals(userInternal.getRole().name())) {

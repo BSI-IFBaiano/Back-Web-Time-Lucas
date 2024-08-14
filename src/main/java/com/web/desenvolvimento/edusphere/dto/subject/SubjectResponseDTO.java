@@ -1,4 +1,13 @@
 package com.web.desenvolvimento.edusphere.dto.subject;
 
-public record SubjectResponseDTO() {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record SubjectResponseDTO(
+        Long idSubject,
+        @NotBlank String name,
+        @NotBlank String departmentName,
+        @NotNull int totNumberOfClasses
+
+) {
 }

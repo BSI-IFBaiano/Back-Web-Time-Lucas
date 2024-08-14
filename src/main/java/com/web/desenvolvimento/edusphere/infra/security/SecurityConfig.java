@@ -44,7 +44,10 @@ public class SecurityConfig {
                                 "/edusphere/courses/register",
                                 "/edusphere/students/register")
                         .hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST,"/edusphere/courses/register").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.POST,
+                                "/edusphere/courses/register",
+                                "/edusphere/subjects/register")
+                        .hasRole("MANAGER")
                         .anyRequest().permitAll()
                 ).sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
