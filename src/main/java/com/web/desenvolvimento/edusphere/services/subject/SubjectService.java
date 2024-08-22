@@ -42,4 +42,9 @@ public class SubjectService {
         }
         throw new DepartmentNotFoundException("Departamento não foi encontrado!");
     }
+
+    @Transactional
+    public Subject findByIdInternal(Long id) {
+        return subjectRepository.findById(id).orElseThrow(() -> new RuntimeException("Disciplina não encontrado"));
+    }
 }

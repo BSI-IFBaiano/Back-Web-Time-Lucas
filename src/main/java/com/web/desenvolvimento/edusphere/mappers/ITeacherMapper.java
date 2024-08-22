@@ -1,8 +1,6 @@
 package com.web.desenvolvimento.edusphere.mappers;
 
-import com.web.desenvolvimento.edusphere.domain.department.Department;
 import com.web.desenvolvimento.edusphere.domain.teacher.Teacher;
-import com.web.desenvolvimento.edusphere.dto.department.DepartmentResponseDTO;
 import com.web.desenvolvimento.edusphere.dto.teacher.TeacherRequestDTO;
 import com.web.desenvolvimento.edusphere.dto.teacher.TeacherResponseDTO;
 import org.mapstruct.Mapper;
