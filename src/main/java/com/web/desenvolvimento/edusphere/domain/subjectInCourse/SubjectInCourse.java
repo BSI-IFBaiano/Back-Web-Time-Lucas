@@ -1,4 +1,4 @@
-package com.web.desenvolvimento.edusphere.domain.subjectsInCourse;
+package com.web.desenvolvimento.edusphere.domain.subjectInCourse;
 
 import com.web.desenvolvimento.edusphere.domain.course.Course;
 import com.web.desenvolvimento.edusphere.domain.subject.Subject;
@@ -8,11 +8,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "subjectsInCourse")
+@Table(name = "tb_subjects_in_course")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectsInCourse {
+public class SubjectInCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_subject_in_course")
