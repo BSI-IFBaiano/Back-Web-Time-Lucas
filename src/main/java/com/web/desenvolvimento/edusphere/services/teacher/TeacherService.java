@@ -1,6 +1,7 @@
 package com.web.desenvolvimento.edusphere.services.teacher;
 
 import com.web.desenvolvimento.edusphere.domain.department.Department;
+import com.web.desenvolvimento.edusphere.domain.subject.Subject;
 import com.web.desenvolvimento.edusphere.domain.teacher.Teacher;
 import com.web.desenvolvimento.edusphere.domain.teacher.exceptions.DepartmentOrUserNotFoundException;
 import com.web.desenvolvimento.edusphere.domain.user.User;
@@ -54,5 +55,10 @@ public class TeacherService {
                     .body(teacherResponseDTO);
         }
         throw new DepartmentOrUserNotFoundException("Código de usuário ou departamento não encontrados!");
+    }
+
+    @Transactional
+    public Teacher findByIdInternal(Long id) {
+        return teacherRepository.findById(id).orElseThrow(() -> new RuntimeException("Professor não encontrado"));
     }
 }
