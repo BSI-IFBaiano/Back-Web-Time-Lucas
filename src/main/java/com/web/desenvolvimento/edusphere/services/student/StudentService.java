@@ -54,4 +54,9 @@ public class StudentService {
         }
         throw new CourseOrUserNotFoundException("Usuário ou curso não foram encontrados");
     }
+
+    @Transactional
+    public Student findByIdInternal(Long id) {
+        return studentRepository.findById(id).orElseThrow(() -> new RuntimeException("Estudante não encontrado"));
+    }
 }
