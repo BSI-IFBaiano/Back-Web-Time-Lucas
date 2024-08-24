@@ -52,4 +52,10 @@ public class SubjectTaughtService {
         }
         throw new TeacherOrSubjectNotFoundException("Professor ou disciplina não encontrados!");
     }
+
+    @Transactional
+    public SubjectTaught findByIdInternal(Long id) {
+        return subjectTaughtRepository.findById(id).orElseThrow(() -> new RuntimeException(
+                "Código de disciplina lecionada não encontrado"));
+    }
 }
