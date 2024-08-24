@@ -14,11 +14,16 @@ import lombok.NoArgsConstructor;
 public class Allocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_allocation")
     private Long idAllocation;
 
     @ManyToOne
-    @JoinColumn(name = "idSubjectTaught", nullable = false)
+    @JoinColumn(name = "id_subject_taught", nullable = false)
     private SubjectTaught subjectTaught;
 
+    @Column(name = "semester")
     private String semester;
+
+    @Column(name = "year_allocation")
+    private Long yearAllocation;
 }
