@@ -1,14 +1,15 @@
 package com.web.desenvolvimento.edusphere.domain.studentRegistration;
 
 import com.web.desenvolvimento.edusphere.domain.allocation.Allocation;
-import com.web.desenvolvimento.edusphere.domain.user.User;
+
+import com.web.desenvolvimento.edusphere.domain.student.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "studentRegistrations")
+@Table(name = "tb_student_registrations")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,8 +20,8 @@ public class StudentRegistration {
     private Long idStudentRegistration;
 
     @ManyToOne
-    @JoinColumn(name = "id_user", nullable = false)
-    private User user;
+    @JoinColumn(name = "id_student", nullable = false)
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "id_allocation", nullable = false)
