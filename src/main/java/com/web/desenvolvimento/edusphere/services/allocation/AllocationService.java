@@ -3,11 +3,13 @@ package com.web.desenvolvimento.edusphere.services.allocation;
 import com.web.desenvolvimento.edusphere.domain.allocation.Allocation;
 import com.web.desenvolvimento.edusphere.domain.allocation.exceptions.SubjectTaughtNotFoundException;
 import com.web.desenvolvimento.edusphere.domain.subjectTaught.SubjectTaught;
+import com.web.desenvolvimento.edusphere.domain.teacher.Teacher;
 import com.web.desenvolvimento.edusphere.dto.allocation.AllocationRequestDTO;
 import com.web.desenvolvimento.edusphere.dto.allocation.AllocationResponseDTO;
 import com.web.desenvolvimento.edusphere.mappers.IAllocationMapper;
 import com.web.desenvolvimento.edusphere.repositories.IAllocationRepository;
 import com.web.desenvolvimento.edusphere.services.subjectTaught.SubjectTaughtService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,5 +46,10 @@ public class AllocationService {
                     .body(allocationResponseDTO);
         }
         throw new SubjectTaughtNotFoundException("Código de disciplina lecionada não encontrado");
+    }
+
+    @Transactional
+    public Allocation findByIdInternal(Long id) {
+        return allocationRepository.findById(id).orElseThrow(() -> new RuntimeException("Alocação não encontrada"));
     }
 }
