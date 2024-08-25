@@ -1,5 +1,5 @@
-# Etapa 1: Compilar a aplicação
-FROM maven:3.8.6-openjdk-21 AS build
+# Etapa 1: Compilar a aplicação usando Maven com JDK 17 (que é a versão LTS mais próxima)
+FROM maven:3.8.6-openjdk-17 AS build
 
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
@@ -22,4 +22,5 @@ COPY --from=build /app/target/*.jar /app/app.jar
 
 # Comando para executar o aplicativo
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+
 
