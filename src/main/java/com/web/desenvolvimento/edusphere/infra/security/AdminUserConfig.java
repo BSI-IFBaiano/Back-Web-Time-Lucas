@@ -6,15 +6,14 @@ import com.web.desenvolvimento.edusphere.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 public class AdminUserConfig implements CommandLineRunner {
 
-    private IUserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final IUserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public AdminUserConfig(IUserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -25,7 +24,7 @@ public class AdminUserConfig implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        var userAdmin = userRepository.findByUsername("ADMIN");
+        var userAdmin = userRepository.findByUsername("admin");
         userAdmin.ifPresentOrElse(
                 user -> System.out.println("Admin já existe"),
                 () -> {
