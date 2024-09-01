@@ -1,0 +1,49 @@
+name: Deploy on AWS
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+    - uses: actions/checkout@v4
+     
+    - name: Configure AWS credentials
+      run: |
+          aws configure set aws_access_key_id ${{secrets.ACCESS_ID}}
+          aws configure set aws_secret_access_key ${{secrets.SECRET_KEY}}
+          aws configure set default.region us-east-2
+
+    - name: Login to Amazon ECR - Development
+      run: aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 746669192599.dkr.ecr.us-east-2.amazonaws.com/edusphere
+
+    - name: Build and push Docker image to Amazon ECR - Development
+      run: |
+          docker build -t edusphere-api -f Dockerfile .
+          docker tag edusphere-api:latest 746669192599.dkr.ecr.us-east-2.amazonaws.com/edusphere:latest
+          docker push 746669192599.dkr.ecr.us-east-2.amazonaws.com/edusphere:latest
+
+    - name: SSH into development machine and update container
+      uses: appleboy/ssh-action@master
+      with:
+          host: 3.140.255.42
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: |
+            # Login no ECR
+            aws ecr get-login-password --region us-east-2 | sudo docker login --username AWS --password-stdin 746669192599.dkr.ecr.us-east-2.amazonaws.com/edusphere
+      
+            # Atualizar e rodar o contêiner com docker-compose
+            cd /home/ubuntu/proxy_reverse  # Navegue para o diretório onde o docker-compose.yml está localizado
+            sudo docker-compose pull       # Puxa a nova imagem
+            sudo docker-compose up -d 
+            sudo docker image prune -af    # Remove imagens antigas
