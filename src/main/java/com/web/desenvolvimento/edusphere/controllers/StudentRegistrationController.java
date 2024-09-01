@@ -1,7 +1,5 @@
 package com.web.desenvolvimento.edusphere.controllers;
 
-import com.web.desenvolvimento.edusphere.dto.student.StudentRequestDTO;
-import com.web.desenvolvimento.edusphere.dto.student.StudentResponseDTO;
 import com.web.desenvolvimento.edusphere.dto.studentRegistration.StudentRegistrationRequestDTO;
 import com.web.desenvolvimento.edusphere.dto.studentRegistration.StudentRegistrationResponseDTO;
 import com.web.desenvolvimento.edusphere.services.studentRegistration.StudentRegistrationService;

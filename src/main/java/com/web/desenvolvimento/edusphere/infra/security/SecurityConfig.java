@@ -35,7 +35,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/edusphere/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/edusphere/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/edusphere/users/list").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/edusphere/users/delete/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,
                                 "/edusphere/users/register",
                                 "/edusphere/managers/register",

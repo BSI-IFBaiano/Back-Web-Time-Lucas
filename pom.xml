@@ -14,7 +14,7 @@
 	<name>edusphere</name>
 	<description>Inovadora plataforma de sistema de gestão escolar que integra todas as operações acadêmicas e administrativas</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 

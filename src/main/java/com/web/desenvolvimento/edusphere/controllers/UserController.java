@@ -17,7 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
+    @GetMapping("/list")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponseDTO>> findAll() {
         return userService.findAll();
@@ -34,6 +34,11 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserRequestDTO userRequestDTO) {
         return userService.create(userRequestDTO);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> remove(@PathVariable Long idUser) {
+        return userService.delete(idUser);
     }
 
     @PutMapping("/{id}")

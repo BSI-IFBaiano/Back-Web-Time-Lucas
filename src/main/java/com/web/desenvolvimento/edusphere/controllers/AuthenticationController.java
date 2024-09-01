@@ -56,9 +56,9 @@ public class AuthenticationController {
             newUser.setPassword(passwordEncoder.encode(registerRequest.password()));
             this.userRepository.save(newUser);
             String token = this.tokenService.generateToken(newUser);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Success! user created!");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Successo! Usuário criado!");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error! Impossible to create user!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro! Impossível criar usuário!");
         }
     }
 }

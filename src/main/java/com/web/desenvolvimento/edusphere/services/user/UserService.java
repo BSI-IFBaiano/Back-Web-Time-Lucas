@@ -7,16 +7,14 @@ import com.web.desenvolvimento.edusphere.dto.user.UserResponseDTO;
 import com.web.desenvolvimento.edusphere.mappers.IUserMapper;
 import com.web.desenvolvimento.edusphere.domain.user.User;
 import com.web.desenvolvimento.edusphere.repositories.IUserRepository;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -75,6 +73,18 @@ public class UserService {
                     .body(userDTOList);
         }
         throw new UserNotFoundException("Nenhum usuário encontrado");
+    }
+
+    @Transactional
+    public ResponseEntity<String> delete(Long idUser) {
+        Optional<User> userToDelete = userRepository.findById(idUser);
+        if (userToDelete.isEmpty()) {
+            String message = "Usuário não encontrado";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        userRepository.delete(userToDelete.get());
+        String message = "Usuário deletado com sucesso";
+        return ResponseEntity.ok(message);
     }
 
     @Transactional

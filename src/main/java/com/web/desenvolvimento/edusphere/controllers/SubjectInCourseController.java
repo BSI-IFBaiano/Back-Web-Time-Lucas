@@ -1,7 +1,5 @@
 package com.web.desenvolvimento.edusphere.controllers;
 
-import com.web.desenvolvimento.edusphere.dto.manager.ManagerRequestDTO;
-import com.web.desenvolvimento.edusphere.dto.manager.ManagerResponseDTO;
 import com.web.desenvolvimento.edusphere.dto.subjectInCourse.SubjectInCourseRequestDTO;
 import com.web.desenvolvimento.edusphere.dto.subjectInCourse.SubjectInCourseResponseDTO;
 import com.web.desenvolvimento.edusphere.services.subjectInCourse.SubjectInCourseService;

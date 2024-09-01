@@ -1,19 +1,25 @@
-version: '3.8'
+version: 'x.x'
 services:
   db:
     image: postgres:16.2-alpine3.19
     restart: always
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: corvosgordos
+      POSTGRES_PASSWORD: 2000
+      POSTGRES_DB: edusphere  # Nome do banco de dados a ser criado
     ports:
-      - "${DB_PORT}:5432"
+      - 3216:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U corvosgordos"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   adminer:
     image: adminer
     restart: always
     ports:
-      - "${ADMINER_PORT}:8080"
+      - 3836:8080
 
   app:
     build: .
@@ -21,9 +27,9 @@ services:
     ports:
       - "8081:8080"
     environment:
-      DB_HOST: db
-      DB_PORT: ${DB_PORT}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+      DB_URL: jdbc:postgresql://db:5432/edusphere
+      DB_USER: corvosgordos
+      DB_PASSWORD: 2000
     depends_on:
-      - db
+      db:
+        condition: service_healthy
