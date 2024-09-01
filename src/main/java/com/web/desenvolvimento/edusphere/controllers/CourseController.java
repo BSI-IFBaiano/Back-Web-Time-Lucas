@@ -2,10 +2,7 @@ package com.web.desenvolvimento.edusphere.controllers;
 
 import com.web.desenvolvimento.edusphere.dto.course.CourseRequestDTO;
 import com.web.desenvolvimento.edusphere.dto.course.CourseResponseDTO;
-import com.web.desenvolvimento.edusphere.dto.department.DepartmentRequestDTO;
-import com.web.desenvolvimento.edusphere.dto.department.DepartmentResponseDTO;
 import com.web.desenvolvimento.edusphere.services.course.CourseService;
-import com.web.desenvolvimento.edusphere.services.department.DepartmentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
