@@ -10,11 +10,13 @@ import com.web.desenvolvimento.edusphere.repositories.IDepartmentRepository;
 import com.web.desenvolvimento.edusphere.services.manager.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentService {
@@ -42,6 +44,26 @@ public class DepartmentService {
                     .body(departmentResponseDTO);
         }
         throw new ManagerNotFoundException("Gestor não existe!");
+    }
+
+    @Transactional
+    public ResponseEntity<List<DepartmentResponseDTO>> findAll() {
+        var listDepartmentResponse = departmentMapper.toDTO(departmentRepository.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(listDepartmentResponse);
+    }
+
+    @Transactional
+    public ResponseEntity<?> deleteById(Long id) {
+        Optional<Department> department = departmentRepository.findById(id);
+
+        if (department.isPresent()) {
+            departmentRepository.delete(department.get());  
+    
+
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FOUND).build();
+        }
     }
 
     @Transactional
