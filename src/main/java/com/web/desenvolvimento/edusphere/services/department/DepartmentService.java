@@ -10,7 +10,6 @@ import com.web.desenvolvimento.edusphere.repositories.IDepartmentRepository;
 import com.web.desenvolvimento.edusphere.services.manager.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

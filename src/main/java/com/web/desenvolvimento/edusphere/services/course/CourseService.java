@@ -9,6 +9,10 @@ import com.web.desenvolvimento.edusphere.dto.course.CourseResponseDTO;
 import com.web.desenvolvimento.edusphere.mappers.ICourseMapper;
 import com.web.desenvolvimento.edusphere.repositories.ICourseRepository;
 import com.web.desenvolvimento.edusphere.services.department.DepartmentService;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +45,24 @@ public class CourseService {
 
         CourseResponseDTO courseResponseDTO = courseMapper.toDTO(courseToSave);
         return ResponseEntity.status(HttpStatus.CREATED).body(courseResponseDTO);
+    }
+
+    @Transactional
+    public ResponseEntity<List<CourseResponseDTO>> findAll() {
+        var listCourseResponse = courseMapper.toDTO(courseRepository.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(listCourseResponse);
+    }
+
+    @Transactional
+    public ResponseEntity<?> deleteById(Long id) {
+        Optional<Course> course = courseRepository.findById(id);
+
+        if (course.isPresent()) {
+            courseRepository.delete(course.get());  
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FOUND).build();
+        }
     }
 
     @Transactional
